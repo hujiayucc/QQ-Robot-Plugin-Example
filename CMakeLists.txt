@@ -1,0 +1,17 @@
+cmake_minimum_required(VERSION 3.30)
+project(main CXX)
+
+set(CMAKE_C_STANDARD 17)
+set(CMAKE_CXX_STANDARD 17)
+
+add_definitions(-DTEST_EXPORTS)
+add_library(main SHARED main.cpp)
+add_executable(test test.cpp)
+if(MSVC)
+    add_compile_options(/O1)
+    add_compile_options(/GL)
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /LTCG")
+    add_compile_options(/DEBUG:NONE)
+    target_compile_options(main PRIVATE /MT)
+endif()
+set_target_properties(main PROPERTIES OUTPUT_NAME "小宇云创")
